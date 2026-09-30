@@ -1,0 +1,30 @@
+services:
+  workstations:
+    build: .
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: '4312'
+      HOST: 0.0.0.0
+      DATA_DIR: /app/.data
+      CONFIG_FILE: /app/config/site.local.json
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:?Set PUBLIC_ORIGIN to your HTTPS address}
+    ports:
+      - '127.0.0.1:4312:4312'
+    volumes:
+      - workstations-data:/app/.data
+      - ./config/site.local.json:/app/config/site.local.json:ro
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "fetch('http://127.0.0.1:4312/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  workstations-data:

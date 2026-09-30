@@ -1,0 +1,8 @@
+node_modules
+dist
+.data
+.env
+.git
+config/site.local.json
+task_plan.md
+notes.md

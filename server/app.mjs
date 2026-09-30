@@ -89,7 +89,7 @@ export async function createApp(options = {}) {
       if (!['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
         const allowedOrigins = production
           ? [origin]
-          : [origin, 'http://localhost:5173', 'http://127.0.0.1:5173'];
+          : [origin, 'http://127.0.0.1:4312', 'http://localhost:5173', 'http://127.0.0.1:5173'];
         check(
           !req.headers.origin || allowedOrigins.includes(req.headers.origin),
           403,
@@ -307,7 +307,7 @@ export async function createApp(options = {}) {
     const input = applicationInput.parse(raw);
     const seat = seatMap.get(input.seatId);
     check(seat, 404, '工位不存在');
-    validatePeriod(
+    const period = validatePeriod(
       config,
       seat.type,
       input.startDate,
@@ -342,7 +342,7 @@ export async function createApp(options = {}) {
         seat.type,
         input.startDate,
         input.endDate,
-        input.termId ?? null,
+        period.termId,
         input.purpose,
         input.outcome,
         stamp(),
@@ -401,6 +401,7 @@ export async function createApp(options = {}) {
         '申请开始日期已过，请申请人重新提交',
       );
       if (input.decision === 'approved') {
+        check(seatMap.has(row.seat_id), 409, '工位已从当前配置移除，不能批准该申请');
         check(
           !db
             .prepare(

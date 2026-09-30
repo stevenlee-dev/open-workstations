@@ -62,5 +62,18 @@ export function loadConfig(file = process.env.CONFIG_FILE ?? './config/site.exam
   if (new Set(config.terms.map((t) => t.id)).size !== config.terms.length)
     throw new Error('学期 ID 必须唯一');
   if (config.terms.some((t) => t.end < t.start)) throw new Error('学期结束日期不能早于开始日期');
+  try {
+    new Intl.DateTimeFormat('en', { timeZone: config.timeZone });
+  } catch {
+    throw new Error('timeZone 必须是有效的 IANA 时区名');
+  }
+  for (const room of config.rooms) {
+    if (
+      room.seats.some(
+        (seat) => seat.x + seat.width > room.width || seat.y + seat.height > room.height,
+      )
+    )
+      throw new Error(`空间 ${room.id} 的工位超出布局范围`);
+  }
   return config;
 }

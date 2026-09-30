@@ -1,5 +1,7 @@
 # Open Workstations
 
+[English](README_EN.md)
+
 一个可自行部署的工位申请系统。它把空间布局、工位类型和使用期限放在配置文件里，适合实验室、创客空间或共享工作室按自己的规则改造。
 
 项目由 [@sandylee6725-crypto](https://github.com/sandylee6725-crypto) 发起和维护。这个仓库是独立的开源实现，只包含示例房间与演示配置，不包含任何实际实验室的布局、账号或申请记录。

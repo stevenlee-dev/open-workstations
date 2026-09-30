@@ -31,6 +31,7 @@ test('多人可以申请同一工位，批准时阻止重叠分配', async () =>
     const json = async (path, method = 'GET', body, auth) => {
       const headers = {
         'X-Requested-With': 'open-workstations',
+        ...(method !== 'GET' ? { Origin: 'http://127.0.0.1:4312' } : {}),
         ...(auth ? { Cookie: auth.cookie, 'X-CSRF-Token': auth.csrf } : {}),
       };
       if (body && !(body instanceof FormData)) headers['Content-Type'] = 'application/json';
@@ -99,6 +100,25 @@ test('多人可以申请同一工位，批准时阻止重叠分配', async () =>
     assert.equal(conflict.status, 409);
     const denied = await json(`/api/applications/${first.data.id}`, 'GET', null, b);
     assert.equal(denied.status, 404);
+    const c = await register('personthree');
+    const otherSeat = new FormData();
+    otherSeat.append(
+      'payload',
+      JSON.stringify({
+        seatId: 'S-02',
+        startDate: today,
+        endDate: today,
+        termId: 'not-a-real-term',
+        purpose: '这是第三位申请人的短期工位使用计划，需要完成完整记录。',
+        outcome: '完成另外一份可以检查的成果报告。',
+      }),
+    );
+    const third = await json('/api/applications', 'POST', otherSeat, c);
+    assert.equal(third.status, 201);
+    assert.equal(
+      db.prepare('SELECT term_id FROM applications WHERE id=?').get(third.data.id).term_id,
+      null,
+    );
   } finally {
     await new Promise((resolve) => server.close(resolve));
     db.close();

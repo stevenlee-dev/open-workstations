@@ -4,7 +4,7 @@
 
 Open Workstations is a small, self-hosted application for shared lab seats. Rooms, seat positions, seat categories, and term dates live in a JSON configuration file, so each organization can adapt the map to its own space.
 
-The project was started and is maintained by [@sandylee6725-crypto](https://github.com/sandylee6725-crypto). This repository contains a standalone, generic implementation with sample rooms only. It does not contain accounts, application records, or layouts from any operating lab.
+The project was started and is maintained by [@stevenlee-dev](https://github.com/stevenlee-dev). This repository contains a standalone, generic implementation with sample rooms only. It does not contain accounts, application records, or layouts from any operating lab.
 
 ## Included in 0.1.0
 

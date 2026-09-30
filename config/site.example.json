@@ -1,0 +1,94 @@
+{
+  "siteName": "开放工位申请系统",
+  "organization": "示例实验室",
+  "timeZone": "Asia/Shanghai",
+  "registrationOpen": true,
+  "applicationOpen": true,
+  "seatTypes": {
+    "flexible": {
+      "label": "流动工位",
+      "period": "days",
+      "maxDays": 7,
+      "description": "适合短期使用，申请时填写起止日期。"
+    },
+    "rotating": {
+      "label": "轮流工位",
+      "period": "month",
+      "description": "使用期限不超过所选月份月底。"
+    },
+    "fixed": {
+      "label": "固定工位",
+      "period": "term",
+      "description": "按管理方设置的学期申请，到期重新审核。"
+    }
+  },
+  "terms": [
+    { "id": "2026-autumn", "label": "2026 秋季学期", "start": "2026-09-01", "end": "2027-01-31" },
+    { "id": "2027-spring", "label": "2027 春季学期", "start": "2027-02-01", "end": "2027-08-31" }
+  ],
+  "rooms": [
+    {
+      "id": "sample-room",
+      "name": "示例空间",
+      "description": "这是演示布局，请在上线前替换为自己的房间和工位。",
+      "width": 600,
+      "height": 320,
+      "seats": [
+        {
+          "id": "S-01",
+          "label": "01",
+          "type": "flexible",
+          "x": 35,
+          "y": 55,
+          "width": 105,
+          "height": 75
+        },
+        {
+          "id": "S-02",
+          "label": "02",
+          "type": "flexible",
+          "x": 175,
+          "y": 55,
+          "width": 105,
+          "height": 75
+        },
+        {
+          "id": "S-03",
+          "label": "03",
+          "type": "rotating",
+          "x": 315,
+          "y": 55,
+          "width": 105,
+          "height": 75
+        },
+        {
+          "id": "S-04",
+          "label": "04",
+          "type": "rotating",
+          "x": 455,
+          "y": 55,
+          "width": 105,
+          "height": 75
+        },
+        {
+          "id": "S-05",
+          "label": "05",
+          "type": "fixed",
+          "x": 175,
+          "y": 190,
+          "width": 105,
+          "height": 75
+        },
+        {
+          "id": "S-06",
+          "label": "06",
+          "type": "fixed",
+          "x": 315,
+          "y": 190,
+          "width": 105,
+          "height": 75
+        }
+      ]
+    }
+  ]
+}
